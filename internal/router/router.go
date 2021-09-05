@@ -4,12 +4,13 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
-	"github.com/ppal31/mygo/internal/api/books"
+	"github.com/ppal31/mygo/internal/api/resources"
 	"github.com/ppal31/mygo/internal/config"
+	"github.com/ppal31/mygo/internal/store/database"
 	"net/http"
 )
 
-func New(config *config.AppConfig) http.Handler {
+func New(config *config.AppConfig, db *database.DataStore) http.Handler {
 	r := chi.NewRouter()
 
 	r.Route("/api/v1", func(r chi.Router) {
@@ -28,8 +29,9 @@ func New(config *config.AppConfig) http.Handler {
 		r.Use(ncors.Handler)
 
 		// policy endpoints
-		r.Route("/books", func(r chi.Router) {
-			r.Get("/", books.HandleList())
+		r.Route("/resources", func(r chi.Router) {
+			r.Get("/", resources.HandleList(db.ResourceStore))
+			r.Get("/{resourceId}", resources.HandleGet(db.ResourceStore))
 		})
 	})
 	return r

@@ -5,6 +5,7 @@ import "time"
 type AppConfig struct {
 	Debug           bool `envconfig:"APP_DEBUG"`
 	DisableUserMgmt bool `envconfig:"APP_DISABLE_USER_MGMT"`
+	Seed            bool `envconfig:"APP_DATABASE_SEED" default:"true"`
 
 	// Server defines the server configuration parameters.
 	Server struct {

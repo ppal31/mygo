@@ -7,6 +7,7 @@ import (
 	"github.com/ppal31/mygo/internal/logger"
 	"github.com/ppal31/mygo/internal/router"
 	"github.com/ppal31/mygo/internal/server"
+	"github.com/ppal31/mygo/internal/store"
 	"gopkg.in/alecthomas/kingpin.v2"
 	"os"
 )
@@ -33,12 +34,17 @@ func (c *command) run(*kingpin.ParseContext) error {
 }
 
 func initServer(config *config.AppConfig) (*server.Server, error) {
-	handler := router.New(config)
+	db, err := store.Connect(config.Database.Driver, config.Database.Datasource, config.Seed)
+	if err != nil {
+		return nil, err
+	}
+	handler := router.New(config, db)
 	serverServer := &server.Server{
 		Addr:    config.Server.Bind,
 		Host:    config.Server.Host,
 		Handler: handler,
 	}
+
 	return serverServer, nil
 }
 
