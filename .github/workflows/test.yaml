@@ -13,10 +13,12 @@ jobs:
         run: |
           json_string='{"name": "John", "age": 30, "city": "New York"}'
           echo "person=$json_string" >> "$GITHUB_OUTPUT"
+          echo "local=prashant" >> "$GITHUB_OUTPUT"
       - id: step2
         run: |
           echo ${{steps.step1.outputs.person.name}}
           echo "test=world" >> "$GITHUB_OUTPUT"
+          echo $local
   job2:
      runs-on: ubuntu-latest
      needs: job1
