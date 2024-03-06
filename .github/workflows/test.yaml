@@ -11,6 +11,7 @@ jobs:
     steps:
       - id: step1
         run: |
+          echo $GITHUB_OUTPUT
           json_string='{"name": "John", "age": 30, "city": "New York"}'
           echo "person=$json_string" >> "$GITHUB_OUTPUT"
       - id: step2
