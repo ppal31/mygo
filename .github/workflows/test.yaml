@@ -10,10 +10,12 @@ jobs:
     #   output2: ${{ steps.step2.outputs.test }}
     steps:
       - id: step1
-        run: echo "test=hello" >> "$GITHUB_OUTPUT"
+        run: |
+          json_string='{"name": "John", "age": 30, "city": "New York"}'
+          echo "person=$json_string" >> "$GITHUB_OUTPUT"
       - id: step2
         run: |
-          echo ${{steps.step1.outputs.test}}
+          echo ${{steps.step1.outputs.person}}
           echo "test=world" >> "$GITHUB_OUTPUT"
   job2:
      runs-on: ubuntu-latest
