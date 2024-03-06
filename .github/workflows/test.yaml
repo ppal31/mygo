@@ -11,12 +11,14 @@ jobs:
     steps:
       - id: step1
         run: |
-          echo $GITHUB_OUTPUT
+          echo 
           json_string='{"name": "John", "age": 30, "city": "New York"}'
           echo "person=$json_string" >> "$GITHUB_OUTPUT"
+          echo "out1=$GITHUB_OUTPUT" >> "$GITHUB_OUTPUT"
       - id: step2
         run: |
           echo ${{steps.step1.outputs.person}}
+          cat ${{steps.step1.outputs.out1}}
           echo "test=world" >> "$GITHUB_OUTPUT"
           cat $GITHUB_OUTPUT | xargs echo
   job2:
