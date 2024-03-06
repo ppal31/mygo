@@ -21,6 +21,7 @@ jobs:
           cat ${{steps.step1.outputs.out1}}
           echo "test=world" >> "$GITHUB_OUTPUT"
           cat $GITHUB_OUTPUT | xargs echo
+          printenv
   job2:
      runs-on: ubuntu-latest
      needs: job1
