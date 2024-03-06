@@ -15,7 +15,7 @@ jobs:
           echo "person=$json_string" >> "$GITHUB_OUTPUT"
       - id: step2
         run: |
-          echo ${{steps.step1.outputs.person}}
+          echo ${{steps.step1.outputs.person.name}}
           echo "test=world" >> "$GITHUB_OUTPUT"
   job2:
      runs-on: ubuntu-latest
