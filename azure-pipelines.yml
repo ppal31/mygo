@@ -1,19 +1,13 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-trigger:
-- master
-
-pool:
-  vmImage: ubuntu-latest
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+variables:
+  global_variable: value    # this is available to all jobs
+  job_variable1: lol
+jobs:
+- job: job1
+  pool:
+    vmImage: 'ubuntu-latest'
+  variables:
+    job_variable1: value1    # this is only available in job1
+  steps:
+  - bash: echo $(global_variable)
+  - bash: echo $(job_variable1)
+  - bash: echo $JOB_VARIABLE1 # variables are available in the script environment too
